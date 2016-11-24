@@ -3,7 +3,14 @@ class BlockSliderController {
         this.$timeout = $timeout;
         this.$scope = $scope;
 
+        // parseQuery.find(
+        //     parseQuery.new('Companies').ascending('order')
+        // ).then((data) => {
+        //     this.slides = data;
+        // });
+
         this.busy = false;
+
         this.activeSlideId = 0;
 
         this._scroll();
@@ -16,6 +23,7 @@ class BlockSliderController {
     }
 
     _scroll () {
+        // if (this.$rootScope.curState === 'root.main') {
         // Firefox
         $(window).bind('DOMMouseScroll', (e) => {
             if (e.originalEvent.detail > 0) {
@@ -25,7 +33,7 @@ class BlockSliderController {
                 // scroll up
                 this._goToPrev();
             }
-            // prevent page from scrolling
+            // prevent page fom scrolling
             return false;
         });
 
@@ -43,6 +51,9 @@ class BlockSliderController {
                 this._goToPrev();
             }
         });
+        // } else {
+        //     console.log('state = undefined');
+        // }
     }
 
     _goToSlide (index) {
@@ -52,6 +63,9 @@ class BlockSliderController {
         setTimeout(() => {
             this.isMoving = false;
         }, 1000);
+        // if (!this.$rootScope.isMobile) {
+        //     this.$scope.$apply();
+        // }
     }
 
     _goToNext () {
@@ -67,6 +81,7 @@ class BlockSliderController {
             this._goToSlide(this.activeSlideId - 1);
         } else {
             return;
+            // this._goToSlide(this.slides.length - 1);
         }
     }
 }
