@@ -1,0 +1,85 @@
+- require('./block.slider.styl')
+
+.omc-slider#omcSlider(
+    ng-if='!$root.preload && sliderCtrl.ready' 
+    ng-class=`{ 
+        'omc-slider--played': $root.player, 
+        'omc-slider--touched': $root.sliderTouched 
+    }` 
+    ng-mousemove='sliderCtrl._moveTitle($event)' 
+    app-animate-random="fade-in"
+)
+    .omc-slider__list#omcSliderList(
+        ng-class=`{ 
+            "omc-slider__list--lefted": sliderCtrl.lefted, 
+            "omc-slider__list--righted": sliderCtrl.righted 
+        }` ng-swipe-up="sliderCtrl._goToNext()" 
+        ng-swipe-down="sliderCtrl._goToPrev()" 
+    )
+        .omc-slider__el(
+            ng-repeat='slide in sliderCtrl.slides track by $index' 
+            ng-class=`{ 
+                "omc-slider__el--active": $index === sliderCtrl.activeSlideId, 
+                "omc-slider__el--closed": $index < sliderCtrl.activeSlideId, 
+                "omc-slider__el--active-again": $index === sliderCtrl.up
+            }` 
+        )
+            .omc-slider__image(
+                ng-style='{"background-image": "url({{ ::slide.attributes.image._url }})"}' 
+                ng-click='$root.player = true; sliderCtrl._getProgress(); $root.sliderTouched = true' 
+            )
+            .omc-slider__cover(
+                app-animate-random="fade-in"
+            )
+            .container.omc-slider__content-container(
+                app-animate-random="fade-in"
+            )
+                .omc__col-left
+                    .omc-slider__pagination(
+                        ng-class='{"omc-slider__pagination--visible": !$root.preload}'
+                    )
+                        .omc-slider__link-container(
+                            ng-repeat='link in sliderCtrl.slides track by $index'
+                        )
+                            .omc-slider__circle(
+                                ng-click='sliderCtrl._goToSlide($index)'  
+                            )
+                                .omc-slider__link(
+                                    ng-class=`{ 
+                                        "omc-slider__link--active" : $index === sliderCtrl.activeSlideId, 
+                                        "omc-slider__link--closed" : $index < sliderCtrl.activeSlideId 
+                                    }`  
+                                )
+                    .omc-slider__arrow-container
+                        .omc-slider__arrow(
+                            ng-if='$index == 0'
+                        )
+                            svg(width='13px', height='39px', viewbox='0 0 13 39', version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink')
+                                title F157A792-C23B-4DB6-8D0E-F4A313566943
+                                desc Created with sketchtool.
+                                defs
+                                g#ui-kit(stroke='none', stroke-width='1', fill='none', fill-rule='evenodd')
+                                    g#elements(transform='translate(-107.000000, -191.000000)', fill='#FFFFFF')
+                                        path(d='M114,226.833197 L114,191 L113,191 L113,227.055821 L107.707107,222.139893 L107,222.846999 L113.886073,229.242641 L114.59318,228.535534 L114.113354,228.089881 L119.688674,222.929366 L118.981567,222.22226 L114,226.833197 Z', id='стрелка')
+                .omc__col-right
+                    .omc-slider__title.omc-slider__title--desktop(
+                        ng-bind='::slide.attributes.name'
+                    )
+                    p.omc-slider__description(
+                        ng-if='slide.attributes.description',
+                        ng-bind='::slide.attributes.description'
+                    )
+                    p.omc-slider__text(
+                        ng-if='slide.attributes.text',
+                        ng-bind='::slide.attributes.text'
+                    )
+                    //- .omc-slider__tags(
+                    //-     ng-if="slide.services"
+                    //- )
+                    //-     .omc-slider__tag-container
+                    //-         .omc-slider__tag(ng-repeat="service in slide.services")
+                                .omc-slider__tag-title(ng-bind="service.attributes.name")
+                    a.omc-slider__button(
+                        ng-if="slide.attributes.slug",
+                        ng-href="./company/{{slide.attributes.slug}}"
+                    ) Подробнее

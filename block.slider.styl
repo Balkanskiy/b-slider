@@ -1,0 +1,272 @@
+@require '../_common/styles/global'
+
+.omc-slider
+    @extend .omc-animate--slider
+    position relative
+    width 99vw
+    height 100vh
+    background-color: #000
+    &__content-container
+        @extend .omc-animate--content-container
+        display: flex
+        justify-content: space-between
+        align-items: center
+        height: 100%
+        position: relative
+    &__list
+        position absolute
+        left 0
+        top 0
+        display flex
+        width auto
+        height 100%
+        will-change transform
+    &__el
+        position absolute
+        left 0
+        top @left
+        opacity 0
+        width 100vw
+        height 100%
+        overflow hidden
+        transition backgound-transition
+        display: flex
+        flex-direction: column
+        justify-content: center
+        pointer-events: none
+        @media (max-width: $screen.phone)
+            padding-top: 70px
+        &--active
+            opacity 1
+            pointer-events: auto
+            .omc-slider__image:before
+                opacity 1
+            .omc-slider__title
+                opacity: 1
+                transition: slide-title-description-transition
+                transition-delay: slide-title-transition-delay
+                transform: slide-transform-active
+            .omc-slider__description
+                opacity: 1
+                transition: slide-title-description-transition
+                transition-delay: slide-description-transition-delay
+                transform: slide-transform-active
+            .omc-slider__text
+                opacity: 1
+                transition: slide-title-description-transition
+                transition-delay: slide-description-transition-delay
+                transform: slide-transform-active
+            .omc-slider__tags
+                opacity: 1
+                transition: slide-title-description-transition
+                transition-delay: slide-last-transition-delay
+                transform: slide-transform-active
+            .omc-slider__button
+                opacity: 1
+                transition: transform 1s ease 1s, opacity 1s ease 1s, background-color .3s ease 0s
+                transform: slide-transform-active
+        &--closed
+            pointer-events: none
+            .omc-slider__title
+                transition: slide-title-description-transition
+                transform: slide-transform-closed
+            .omc-slider__description
+                transition: slide-title-description-transition
+                transform: slide-transform-closed
+            .omc-slider__text
+                transition: slide-title-description-transition
+                transform: slide-transform-closed
+            .omc-slider__tags
+                transition: slide-title-description-transition
+                transform: slide-transform-closed
+            .omc-slider__button
+                transition: slide-title-description-transition
+                transform: slide-transform-closed
+        &--active-again
+            .omc-slider__title
+                transition-delay: slide-last-transition-delay
+            .omc-slider__description
+                transition-delay: slide-description-transition-delay
+            .omc-slider__text
+                transition-delay: slide-description-transition-delay
+            .omc-slider__tags
+                transition-delay: slide-title-transition-delay
+            .omc-slider__button
+                transition-delay: slide-title-transition-delay
+    &__pagination
+        @extend .omc-animate--content-container
+        display: flex
+        flex-direction: column
+        justify-content: center
+        padding: 0px 13px
+        opacity: 0
+        transition: opacity 0.3s ease
+        &--visible
+            opacity 1
+        @media (max-width: $screen.tablet)
+            padding: 0px 0px
+        @media (max-width: $screen.phone)
+            display: none
+    &__link-container
+        display: inline-block
+    &__circle
+        display: inline-block
+        padding: 6px
+        &:hover
+          .omc-slider__link
+              transform: scale(1)
+              cursor pointer
+    &__link
+        position relative
+        display block
+        width 10px
+        height 10px
+        transform: scale(0.5)
+        border-radius 100%
+        background-color alpha(#d6d6d6, .5)
+        transition all .3s ease
+        &:before
+            content ''
+            position absolute
+            display block
+            width 100%
+            height 100%
+            opacity 0
+            border-radius 100%
+            background-color #e53a26
+            transition all .3s ease
+        &--active
+            cursor pointer
+        &--active
+            &:before
+                opacity 1
+                transition all .3s ease
+    &__image
+        position absolute
+        left 0
+        top @left
+        width 100%
+        height 100%
+        background: no-repeat center
+        background-size cover
+        pointer-events: none
+        background-color: #000
+    &__cover
+        @extend .omc-animate--cover
+        position absolute
+        top: 0
+        left 0
+        background-color: rgba(0, 0, 0, 0.6)
+        width: 100%
+        height: 100%
+        opacity: .5 !important
+        transition: backgound-transition
+    &__content-continer
+        display: inline-block
+        padding-bottom: 54px
+    &__title
+        opacity: 0
+        font-size: 32px;
+        letter-spacing: 1.6px
+        color: #fff
+        font-family: MuseoSansBold
+        position relative
+        padding-bottom: 20px
+        transform: slide-transform
+        transition: slide-title-description-transition
+        transition-delay: slide-title-transition-delay
+        @media (max-width: $screen.tablet)
+            line-height: 1.4
+            padding-bottom: 30px
+        @media (max-width: $screen.phone)
+            letter-spacing: 0.8px;
+            line-height: 1.3;
+            padding-bottom: 9px;
+            font-size: 26px;
+    &__description
+        opacity: 0
+        position relative
+        color: #dedede
+        font-size: 32px
+        font-family: regular
+        line-height: 1.1
+        padding-bottom: 25px
+        transform: slide-transform
+        transition: slide-title-description-transition
+        transition-delay: slide-title-transition-delay
+        @media (max-width: $screen.phone)
+            font-size: 20px
+            line-height: 1.4
+    &__text
+        opacity: 0
+        position relative
+        color: #dedede
+        font-family: regular
+        font-size: 16px
+        columns: 2
+        line-height: 20px
+        padding-bottom: 20px
+        transform: slide-transform
+        transition: slide-title-description-transition
+        transition-delay: slide-title-transition-delay
+    &__tags
+        opacity: 0
+        position relative
+        color: #dedede
+        font-family: regular
+        font-size: 16px
+        columns: 2
+        line-height: 20px
+        padding-bottom: 20px
+        transform: slide-transform
+        transition: slide-title-description-transition
+        transition-delay: slide-title-transition-delay
+    &__tag-container
+        line-height: 2
+    &__tag
+        display: inline-block
+        position: relative
+        line-height: 1
+        min-width: 200px
+    &__tag-title
+        font-size: 16px
+        color: #fff
+        font-family: MuseoSansRegular
+    &__button
+        opacity: 0
+        position relative
+        color: #dedede
+        font-family: bold
+        border: solid 1px #ffffff
+        display: flex
+        align-items: center
+        justify-content: center
+        padding: 10px
+        width: 150px
+        cursor: pointer
+        text-transform: uppercase
+        font-size: 12px
+        transform: slide-transform
+        transition: slide-title-description-transition
+        transition-delay: slide-title-transition-delay
+        &:hover
+            background-color: #fff
+            color: #000
+    &__arrow-container
+        position: absolute
+        left: 60px
+        bottom: 150px
+        @media (max-width: $screen.tablet)
+            left: 0px
+            bottom: 50px
+    &__arrow
+        position: absolute
+        transition: all .3s ease
+        // transition: transform 1s ease
+        animation: ani-arrow 2s infinite
+        // animation-direction: alternate
+        @media (max-width: $screen.tablet)
+            left: 47px
+            bottom: 76px
+        @media (max-width: $screen.phone)
+            display: none
