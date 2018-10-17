@@ -8,27 +8,7 @@ class MainController {
 
         parseQuery.find(
             parseQuery.new('Companies').ascending('order')
-        ).then((data) => {
-            this.slides = data;
-            let i = 0;
-
-            for (const slide of data) {
-                const x = slide.relation('servicesID');
-
-                /* eslint-disable */
-                x.query().find().then((data) => {
-                    this.slides[i].services = data;
-                    i++;
-                });
-                /* eslint-enable */
-            }
-        });
-
-        // parseQuery.find(
-        //     parseQuery.new('Services')
-        // ).then((data) => {
-        //     this.services = data;
-        // });
+        ).then(data => data.map(slide => slide.value))
     }
 }
 
